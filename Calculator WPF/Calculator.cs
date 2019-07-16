@@ -15,12 +15,12 @@ namespace Calculator_WPF
         private int openedBrackets;
 
         private Regex rDigit;
-        private Regex rSpecial; 
+        private Regex rSpecial;
 
         public Calculator()
         {
             rDigit = new Regex(@"\d.?");
-            rSpecial = new Regex(@"[+-/()^*]");
+            rSpecial = new Regex(@"[-()+/*^]");
             values = new List<string>();
             printedValues = "";
             openedBrackets = 0;
@@ -56,7 +56,7 @@ namespace Calculator_WPF
                     case var inp when input.Length == 1 && (rDigit.IsMatch(inp) || input == ","):
                         if (values.Count != 0 && (rDigit.IsMatch(values.Last()) || input == ","))
                         {
-                            if (input == "," && values.Last().Contains(","))
+                            if (input == "," && values.Last().Contains("."))
                             {
 
                             }
@@ -126,7 +126,8 @@ namespace Calculator_WPF
                             {
                                 if ((rSpecial.IsMatch(values.Last()) == false && values.Last() != ",") || values.Last() == ")")
                                 {
-                                    values.Add(input);
+                                    values.Add("^");
+                                    values.Add(input.Remove(0, 1));
                                 }
                             }
                             else
@@ -140,7 +141,9 @@ namespace Calculator_WPF
                         }
                         break;
                     case "=":
-                        Count();
+                        RPN rpn = new RPN(rDigit, rSpecial, values);
+                        rpn.prepareRPN();
+                        rpn.countRPN();
                         break;
                     case "":
                         values.Clear();
@@ -153,156 +156,10 @@ namespace Calculator_WPF
 
         private bool IsValidInput(string input)
         {
-            Func<string, bool> result = (x) => rDigit.IsMatch(x) || rSpecial.IsMatch(x) || input == "" || input == "=";
+            Func<string, bool> result = (x) => rDigit.IsMatch(x) || rSpecial.IsMatch(x) || input == "" || input == "=" || input == ",";
 
             return result(input);
         }
-
-        #region Counting
-
-        public void Count()
-        {
-            printedValues = "";            
-            
-            while(openedBrackets > 0)
-            {
-                values.Add(")");
-            }
-
-            while(values.IndexOf(")") != -1)
-            {
-                List<string> valuesInsideBrackets = new List<string>();
-                int startIndex = -1, endIndex = -1;
-                endIndex = values.IndexOf(")");
-
-                startIndex = values.LastIndexOf("(", endIndex);
-
-                valuesInsideBrackets.AddRange(values.GetRange(startIndex + 1,endIndex - startIndex - 1));
-
-                values.RemoveRange(startIndex, endIndex - startIndex + 1);
-                values.Insert(startIndex, CountInsideBrackets(valuesInsideBrackets));
-            }
-
-            while (values.Contains("^"))
-            {
-                int index = values.IndexOf("^");
-                int number = int.Parse(values[index - 1]);
-                int power = int.Parse(values[index + 1]);
-
-                values.RemoveRange(index - 1, 3);
-                values.Insert(index - 1, CountPower(number, power));
-            }
-
-            printedValues = CountRest(values);
-
-            values.Clear();
-            values.Add(printedValues);
-        }
-
-        string CountInsideBrackets(List<string> val)
-        {
-            string output = "";
-
-            while (val.Contains("^"))
-            {
-                int index = val.IndexOf("^");
-                int number = index - 1;
-                int power = index + 1;
-
-                val.RemoveRange(val.IndexOf("^") - 1,val.IndexOf("^" + 1));
-                val.Insert(index, CountPower(number, power));
-            }
-
-            output = CountRest(val);
-
-            return output;
-        }
-
-        string CountPower(int num, int pow)
-        {
-            string output = "";
-
-            output = Math.Pow(num, pow).ToString();
-
-            return output;
-        }
-
-        string CountRest(List<string> val)
-        {
-            string output = "";
-
-            while(val.Contains("*") || val.Contains("/"))
-            {
-                int indexMul = val.IndexOf("*");
-                int indexDiv = val.IndexOf("/");
-
-                if(indexDiv == -1 || (indexMul < indexDiv && indexMul != -1))
-                {
-                    val[indexMul - 1] = CountMulDiv(Convert.ToDouble(val[indexMul - 1]), Convert.ToDouble(val[indexMul + 1]), "*");
-                    val.RemoveRange(indexMul, 2);
-                }
-                else
-                {
-                    val[indexDiv - 1] = CountMulDiv(Convert.ToDouble(val[indexDiv - 1]), Convert.ToDouble(val[indexDiv + 1]), "/");
-                    val.RemoveRange(indexDiv, 2);
-                }
-            }
-
-            while(val.Contains("+") || val.Contains("-"))
-            {
-                int indexPlus = val.IndexOf("+");
-                int indexMinus = val.IndexOf("-");
-
-                if(indexMinus == -1 ||(indexPlus < indexMinus && indexPlus != -1))
-                {
-                    val[indexPlus - 1] = CountPlusMin(Convert.ToDouble(val[indexPlus - 1]), Convert.ToDouble(val[indexPlus + 1]), "+");
-                    val.RemoveRange(indexPlus, 2);
-                }
-                else
-                {
-                    val[indexMinus - 1] = CountPlusMin(Convert.ToDouble(val[indexMinus - 1]), Convert.ToDouble(val[indexMinus + 1]), "-");
-                    val.RemoveRange(indexMinus, 2);
-                }
-            }
-
-            output = val[0];
-
-            return output;
-        }
-
-        string CountMulDiv(double a, double b, string sign)
-        {
-            string output = "";
-
-            if(sign == "*")
-            {
-                output = (a * b).ToString();
-            }
-            else
-            {
-                output = (a / b).ToString();
-            }
-
-            return output;
-        }
-
-        string CountPlusMin(double a, double b, string sign)
-        {
-            string output = "";
-
-            if(sign == "+")
-            {
-                output = (a + b).ToString();
-            }
-            else
-            {
-                output = (a - b).ToString();
-            }
-
-            return output;
-        }
-
-        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
 

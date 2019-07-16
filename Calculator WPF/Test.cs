@@ -25,6 +25,7 @@ namespace Calculator_WPF
             Test5();
             Test6();
             Test7();
+            Test8();
         }
 
         void Test1()
@@ -202,6 +203,37 @@ namespace Calculator_WPF
             else
             {
                 Debug.Print("Test7 FAIL");
+            }
+            calc.InputValue("");
+        }
+
+        void Test8()
+        {
+            calc.InputValue("2");
+            calc.InputValue("+");
+            calc.InputValue("5");
+            calc.InputValue("3");
+            calc.InputValue("-");
+            calc.InputValue("6");
+            calc.InputValue("^");
+            calc.InputValue("2");
+            calc.InputValue("*");
+            calc.InputValue("(");
+            calc.InputValue("3");
+            calc.InputValue("-");
+            calc.InputValue("1");
+            calc.InputValue(")");
+            calc.InputValue("^");
+            calc.InputValue("3");
+            calc.InputValue("=");
+
+            if(calc.PrintedValues == "-233")
+            {
+                Debug.Print("Test8 OK");
+            }
+            else
+            {
+                Debug.Print("Test8 FAIL");
             }
             calc.InputValue("");
         }

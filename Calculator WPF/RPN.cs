@@ -11,16 +11,18 @@ namespace Calculator_WPF
     {
         Regex rDigit;
         Regex rSpecial;
+        Regex rOther;
         List<string> values;
 
-        public RPN(Regex rDig, Regex rSpec, List<string> val)
+        public RPN(Regex rDig, Regex rSpec, Regex rOth, List<string> val)
         {
             rDigit = rDig;
             rSpecial = rSpec;
+            rOther = rOth;
             values = val;
         }
 
-        public void prepareRPN()
+        public void PrepareRPN()
         {
             List<string> output = new List<string>();
             List<string> operators = new List<string>();
@@ -30,7 +32,22 @@ namespace Calculator_WPF
                 switch (values[0])
                 {
                     case var token when rDigit.IsMatch(token):
-                        output.Add(values[0]);
+                        if(output.Count == 0 && operators.Count == 1)
+                        {
+                            if(operators[0] == "-")
+                            {
+                                operators.Clear();
+                                output.Add("-" + values[0]);
+                            }
+                            else if(operators[0] == "(")
+                            {
+                                output.Add(values[0]);
+                            }
+                        }
+                        else
+                        {
+                            output.Add(values[0]);
+                        }
                         break;
                     case var token when rSpecial.IsMatch(token):
                         if (token == "(")
@@ -80,7 +97,7 @@ namespace Calculator_WPF
             {
                 for (int i = 0; i < values.Count; i++)
                 {
-                    if (rSpecial.IsMatch(values[i]))
+                    if (!rDigit.IsMatch(values[i]))
                     {
                         double a = double.Parse(values[i - 2]);
                         double b = double.Parse(values[i - 1]);
@@ -130,9 +147,12 @@ namespace Calculator_WPF
                     if (operand == operatorsPrecedence[i][j])
                     {
                         precedence = i;
+                        goto Exit;
                     }
                 }
             }
+
+            Exit:
 
             return precedence;
         }

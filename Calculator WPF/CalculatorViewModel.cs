@@ -17,7 +17,7 @@ namespace Calculator_WPF
             set
             {
                 calc = value;
-                OnPropertyChanged("Calculator");
+                //OnPropertyChanged("Calculator");
             }
         }
 
@@ -27,8 +27,6 @@ namespace Calculator_WPF
         {
             calc = new Calculator();
             Input = new MyCommand(new Action<object>(InputData));
-            Test t = new Test(calc);
-            t.DoTests();
         }
 
         private void InputData(object sender)

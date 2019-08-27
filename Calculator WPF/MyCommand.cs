@@ -26,7 +26,14 @@ namespace Calculator_WPF
         
         public bool CanExecute(object parameter)
         {
-            return true;
+            if(Calculator.IsValidInput(parameter.ToString()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public event EventHandler CanExecuteChanged;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Calculator_WPF.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class CalculatorTests
     {
         [TestMethod()]
@@ -29,22 +29,19 @@ namespace Calculator_WPF.Tests
         [TestMethod()]
         public void AddTest()
         {
-
             // Arrange
-
             Calculator calc = new Calculator();
-            string equation = "2+2=";
+            string equation = "2+2";
             string expected = "4";
 
             // Act
-
             foreach(char s in equation)
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
-
             Assert.AreEqual(calc.PrintedValues, expected);
         }
 
@@ -55,7 +52,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "12-9=";
+            string equation = "12-9";
             string expected = "3";
 
             // Act
@@ -64,7 +61,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
-
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -79,7 +76,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "12*4=";
+            string equation = "12*4";
             string expected = "48";
 
             // Act
@@ -88,6 +85,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -101,7 +99,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "30/6=";
+            string equation = "30/6";
             string expected = "5";
 
             // Act
@@ -110,6 +108,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -123,7 +122,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "8^2=";
+            string equation = "8^2";
             string expected = "64";
 
             // Act
@@ -132,6 +131,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -145,7 +145,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "2^3=";
+            string equation = "2^3";
             string expected = "8";
 
             // Act
@@ -154,6 +154,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -167,7 +168,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "2+(7*3)=";
+            string equation = "2+(7*3)";
             string expected = "23";
 
             // Act
@@ -176,6 +177,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -189,7 +191,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "-7+3=";
+            string equation = "-7+3";
             string expected = "-4";
 
             // Act
@@ -198,6 +200,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -211,7 +214,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "2+5*4-6/3=";
+            string equation = "2+5*4-6/3";
             string expected = "20";
 
             // Act
@@ -220,6 +223,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -233,7 +237,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "(8*2)-6*9=";
+            string equation = "(8*2)-6*9";
             string expected = "-38";
 
             // Act
@@ -242,6 +246,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -255,7 +260,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "(3+4)(2-7)=";
+            string equation = "(3+4)(2-7)";
             string expected = "-35";
 
             // Act
@@ -264,6 +269,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -277,7 +283,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "-5(5*2)+4*2=";
+            string equation = "-5(5*2)+4*2";
             string expected = "-42";
 
             // Act
@@ -286,6 +292,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 
@@ -299,7 +306,7 @@ namespace Calculator_WPF.Tests
             // Arrange
 
             Calculator calc = new Calculator();
-            string equation = "(12*4)^2-81/3=";
+            string equation = "(12*4)^2-81/3";
             string expected = "2277";
 
             // Act
@@ -308,6 +315,7 @@ namespace Calculator_WPF.Tests
             {
                 calc.InputValue(s.ToString());
             }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
 

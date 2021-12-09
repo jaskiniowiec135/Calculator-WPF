@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
-using System.Windows;
 
 namespace Calculator_WPF
 {
@@ -21,7 +16,7 @@ namespace Calculator_WPF
             }
         }
 
-        public MyCommand Input {get; set;}
+        public MyCommand Input { get; set; }
 
         public CalculatorViewModel()
         {
@@ -31,14 +26,14 @@ namespace Calculator_WPF
 
         private void InputData(object sender)
         {
-            calc.InputValue(sender.ToString());  
+            calc.InputValue(sender.ToString());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string property)
         {
-            if(PropertyChanged != null)
+            if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }

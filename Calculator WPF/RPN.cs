@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
 namespace Calculator_WPF
@@ -11,14 +9,12 @@ namespace Calculator_WPF
     {
         Regex rDigit;
         Regex rSpecial;
-        Regex rOther;
         List<string> values;
 
-        public RPN(Regex rDig, Regex rSpec, Regex rOth, List<string> val)
+        public RPN(Regex rDig, Regex rSpec, List<string> val)
         {
             rDigit = rDig;
             rSpecial = rSpec;
-            rOther = rOth;
             values = val;
         }
 
@@ -32,14 +28,14 @@ namespace Calculator_WPF
                 switch (values[0])
                 {
                     case var token when rDigit.IsMatch(token):
-                        if(output.Count == 0 && operators.Count == 1)
+                        if (output.Count == 0 && operators.Count == 1)
                         {
-                            if(operators[0] == "-")
+                            if (operators[0] == "-")
                             {
                                 operators.Clear();
                                 output.Add("-" + values[0]);
                             }
-                            else if(operators[0] == "(")
+                            else if (operators[0] == "(")
                             {
                                 output.Add(values[0]);
                             }
@@ -66,9 +62,9 @@ namespace Calculator_WPF
                             break;
                         }
 
-                        int currentPrecedence = checkPrecedence(token);
-                        while (operators.Count != 0 && (currentPrecedence > checkPrecedence(operators.Last()) |
-                              (currentPrecedence == checkPrecedence(operators.Last()) & operators.Last() != "^") &
+                        int currentPrecedence = CheckPrecedence(token);
+                        while (operators.Count != 0 && (currentPrecedence > CheckPrecedence(operators.Last()) |
+                              (currentPrecedence == CheckPrecedence(operators.Last()) & operators.Last() != "^") &
                               operators.Last() != "("))
                         {
                             output.Add(operators.Last());
@@ -91,7 +87,7 @@ namespace Calculator_WPF
             values.AddRange(output);
         }
 
-        public void countRPN()
+        public void CountRPN()
         {
             while (values.Count > 1)
             {
@@ -106,7 +102,7 @@ namespace Calculator_WPF
                         switch (special)
                         {
                             case "^":
-                                values[i - 2] = (Math.Pow(a, b)).ToString();
+                                values[i - 2] = Math.Pow(a, b).ToString();
                                 break;
                             case "*":
                                 values[i - 2] = (a * b).ToString();
@@ -130,7 +126,7 @@ namespace Calculator_WPF
             }
         }
 
-        private static int checkPrecedence(string operand)
+        private static int CheckPrecedence(string operand)
         {
             int precedence = -1;
             string[][] operatorsPrecedence = new string[4][] {
@@ -138,7 +134,6 @@ namespace Calculator_WPF
                                             new string[]{ @"*",@"/"},
                                             new string[]{ "+", "-" },
                                             new string[]{"(",")" }};
-
 
             for (int i = 0; i < operatorsPrecedence.Length; i++)
             {
@@ -152,7 +147,7 @@ namespace Calculator_WPF
                 }
             }
 
-            Exit:
+        Exit:
 
             return precedence;
         }

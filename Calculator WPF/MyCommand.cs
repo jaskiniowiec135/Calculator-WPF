@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Calculator_WPF
@@ -18,15 +14,15 @@ namespace Calculator_WPF
 
         public void Execute(object parameter)
         {
-            if(_execute != null)
+            if (_execute != null)
             {
                 _execute(parameter ?? "<N/A>");
             }
         }
-        
+
         public bool CanExecute(object parameter)
         {
-            if(Calculator.IsValidInput(parameter.ToString()))
+            if (Calculator.IsValidInput(parameter.ToString()))
             {
                 return true;
             }

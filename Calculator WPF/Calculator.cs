@@ -13,16 +13,20 @@ namespace Calculator_WPF
         private int openedBrackets;
 
         private static Regex rDigit;
-        private static Regex rSpecial;
+        private static Regex rSeparator;
+        private static Regex rBasic;
+        private static Regex rBrackets;
         private static Regex rOther;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Calculator()
         {
-            rDigit = new Regex(@"\d.?");
-            rSpecial = new Regex(@"[-()+/*^]");
-            rOther = new Regex($@"[{"Clear"}{"RemoveLast"}{"Calculate"}{","}]");
+            rDigit = new Regex(@"[\d]");
+            rSeparator = new Regex(@"[\.\,]");
+            rBasic = new Regex(@"[-+/*^]");
+            rBrackets = new Regex(@"[()]");
+            rOther = new Regex($@"[{"Clear"}{"RemoveLast"}{"Calculate"}]");
             values = new List<string>();
             printedValues = "";
             openedBrackets = 0;
@@ -53,81 +57,19 @@ namespace Calculator_WPF
         {
             switch (input)
             {
-                case var inp when input.Length == 1 && (rDigit.IsMatch(inp) || input == ","):
-                    if (values.Count != 0 && (rDigit.IsMatch(values.Last()) || input == ","))
+                case var inp when (rDigit.IsMatch(inp) || rSeparator.IsMatch(inp))
+                    && !rBasic.IsMatch(inp):
+                    if (rDigit.IsMatch(input))
                     {
-                        if (!(input == "," && values.Last().Contains(".")))
+                        if (values.Count != 0 && (rDigit.IsMatch(values.Last())))
                         {
-                            values[values.Count - 1] = values[values.Count - 1] + input;
-                        }
-                    }
-                    else
-                    {
-                        if (input != ".")
-                        {
-                            values.Add(input);
-                        }
-                    }
-                    break;
-                case var inp when rSpecial.IsMatch(inp):
-                    if (values.Count > 0)
-                    {
-                        if (rSpecial.IsMatch(values.Last()) && input != "(" && input != ")" && input.Contains("^") == false)
-                        {
-                            if (values.Last() != ")" && values.Last() != "(")
-                            {
-                                values.Add(input);
-                            }
-                            else if (values.Last() == ")")
-                            {
-                                values.Add(input);
-                            }
-                        }
-                        else if (input.Contains("("))
-                        {
-                            if (input.Contains("^"))
+                            if (values.Count == 1 && values.Last() == "-")
                             {
                                 values.Add(input);
                             }
                             else
                             {
-                                if (rDigit.IsMatch(values.Last()))
-                                {
-                                    values.Add("*");
-                                    values.Add(input);
-                                }
-                                else if (values.Last() == ")")
-                                {
-                                    values.Add("*");
-                                    values.Add(input);
-                                }
-                                else if (rSpecial.IsMatch(values.Last()))
-                                {
-                                    values.Add(input);
-                                }
-                            }
-                            openedBrackets++;
-                        }
-                        else if (input == ")")
-                        {
-                            if (openedBrackets > 0)
-                            {
-                                if (rDigit.IsMatch(values.Last()) || values.Last() == ")")
-                                {
-                                    values.Add(input);
-                                    openedBrackets--;
-                                }
-                            }
-                        }
-                        else if (input.Contains("^"))
-                        {
-                            if ((rSpecial.IsMatch(values.Last()) == false && values.Last() != ",") || values.Last() == ")")
-                            {
-                                while(input.Length > 0)
-                                {
-                                    values.Add(input[0].ToString());
-                                    input = input.Substring(1);
-                                }
+                                values[values.Count - 1] = values[values.Count - 1] + input;
                             }
                         }
                         else
@@ -137,16 +79,95 @@ namespace Calculator_WPF
                     }
                     else
                     {
+                        if (values.Count > 0 &&
+                            !rSeparator.IsMatch(values.Last()) &&
+                            rDigit.IsMatch(values.Last()))
+                        {
+                            values[values.Count - 1] = values[values.Count - 1] + input;
+                        }
+                    }
+                    break;
+                case var inp when rBasic.IsMatch(inp):
+                    if (values.Count > 0)
+                    {
+                        if (!rBasic.IsMatch(values.Last()))
+                        {
+                            if (values.Last() != "(")
+                            {
+                                if (input.Contains("^"))
+                                {
+                                    for (int i = 0; i < input.Length; i++)
+                                    {
+                                        values.Add(input[i].ToString());
+                                    }
+                                }
+                                else
+                                {
+                                    values.Add(input);
+                                }
+                            }
+                        }
+                        else if (values.Last() == "^")
+                        {
+                            if (rSeparator.IsMatch(values.Last()) || values.Last() == ")")
+                            {
+                                values.Add(input);
+                            }
+                        }
+                    }
+                    else if (input == "-")
+                    {
                         values.Add(input);
-                        if (input.Contains("("))
-                            openedBrackets++;
+                    }
+                    break;
+                case var inp when rBrackets.IsMatch(inp):
+                    if (input == "(")
+                    {
+                        if (values.Count > 0)
+                        {
+                            if (rDigit.IsMatch(values.Last()) || values.Last() == ")")
+                            {
+                                values.Add("*");
+                                values.Add(input);
+                            }
+                            else if (rBasic.IsMatch(values.Last()))
+                            {
+                                values.Add(input);
+                            }
+                        }
+                        else
+                        {
+                            values.Add(input);
+                        }
+                        openedBrackets++;
+                    }
+                    else if (input == ")")
+                    {
+                        if (openedBrackets > 0)
+                        {
+                            if (rDigit.IsMatch(values.Last()) || values.Last() == ")")
+                            {
+                                values.Add(input);
+                                openedBrackets--;
+                            }
+                        }
                     }
                     break;
                 case var inp when rOther.IsMatch(inp):
-                    if (inp == SpecialSignals.Calculate.ToString() &&
-                        IsEquationValid())
+                    if (inp == SpecialSignals.Calculate.ToString())
                     {
-                        RPN rpn = new RPN(rDigit, rSpecial, values);
+                        while (openedBrackets > 0)
+                        {
+                            values.Add(")");
+                            openedBrackets--;
+                        }
+
+                        while (rBasic.IsMatch(values.Last()))
+                        {
+                            values.RemoveAt(values.Count - 1);
+                        }
+
+                        RPN rpn = new RPN(rDigit, rBasic, rBrackets, values);
                         rpn.PrepareRPN();
                         rpn.CountRPN();
                     }
@@ -171,14 +192,9 @@ namespace Calculator_WPF
             UpdateProperties();
         }
 
-        private bool IsEquationValid()
-        {
-            return true;
-        }
-
         public static bool IsValidInput(string input)
         {
-            Func<string, bool> result = (x) => rDigit.IsMatch(x) || rSpecial.IsMatch(x) || rOther.IsMatch(x);
+            Func<string, bool> result = (x) => rDigit.IsMatch(x) || rSeparator.IsMatch(x) || rBasic.IsMatch(x) || rBrackets.IsMatch(x) || rOther.IsMatch(x);
 
             return result(input);
         }

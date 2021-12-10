@@ -8,13 +8,15 @@ namespace Calculator_WPF
     class RPN
     {
         Regex rDigit;
-        Regex rSpecial;
+        Regex rBasic;
+        Regex rBrackets;
         List<string> values;
 
-        public RPN(Regex rDig, Regex rSpec, List<string> val)
+        public RPN(Regex rDig, Regex rBas, Regex rBrack, List<string> val)
         {
             rDigit = rDig;
-            rSpecial = rSpec;
+            rBasic = rBas;
+            rBrackets = rBrack;
             values = val;
         }
 
@@ -45,11 +47,10 @@ namespace Calculator_WPF
                             output.Add(values[0]);
                         }
                         break;
-                    case var token when rSpecial.IsMatch(token):
+                    case var token when rBrackets.IsMatch(token):
                         if (token == "(")
                         {
                             operators.Add("(");
-                            break;
                         }
                         else if (token == ")")
                         {
@@ -59,9 +60,10 @@ namespace Calculator_WPF
                                 operators.RemoveAt(operators.Count - 1);
                             }
                             operators.RemoveAt(operators.Count - 1);
-                            break;
                         }
 
+                        break;
+                    case var token when rBasic.IsMatch(token):
                         int currentPrecedence = CheckPrecedence(token);
                         while (operators.Count != 0 && (currentPrecedence > CheckPrecedence(operators.Last()) |
                               (currentPrecedence == CheckPrecedence(operators.Last()) & operators.Last() != "^") &

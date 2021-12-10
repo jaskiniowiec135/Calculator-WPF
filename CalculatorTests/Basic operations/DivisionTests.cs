@@ -1,18 +1,18 @@
-﻿using Calculator_WPF;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Calculator_WPF;
 
 namespace CalculatorTests.Basic_operations
 {
     [TestClass]
-    public class AddTests
+    public class DivisionTests
     {
-        [TestMethod()]
-        public void SimplestAddTest()
+        [TestMethod]
+        public void SimplestDivideTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "2+2";
-            string expected = "4";
+            string equation = "4/2";
+            string expected = "2";
 
             // Act
             foreach (char s in equation)
@@ -25,107 +25,12 @@ namespace CalculatorTests.Basic_operations
             Assert.AreEqual(expected, calc.PrintedValues);
         }
 
-        [TestMethod()]
-        public void AddingThreeNumbers()
+        [TestMethod]
+        public void DivideThreeNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "2+2+2";
-            string expected = "6";
-
-            // Act
-            foreach (char s in equation)
-            {
-                calc.InputValue(s.ToString());
-            }
-            calc.InputValue(SpecialSignals.Calculate.ToString());
-
-            // Assert
-            Assert.AreEqual(expected, calc.PrintedValues);
-        }
-
-        [TestMethod()]
-        public void AddingFourNumbers()
-        {
-            // Arrange
-            Calculator calc = new Calculator();
-            string equation = "2+2+2+2";
-            string expected = "8";
-
-            // Act
-            foreach (char s in equation)
-            {
-                calc.InputValue(s.ToString());
-            }
-            calc.InputValue(SpecialSignals.Calculate.ToString());
-
-            // Assert
-            Assert.AreEqual(expected, calc.PrintedValues);
-        }
-
-        [TestMethod()]
-        public void AddingTenNumbers()
-        {
-            // Arrange
-            Calculator calc = new Calculator();
-            string equation = "1+1+1+1+1+1+1+1+1+1";
-            string expected = "10";
-
-            // Act
-            foreach (char s in equation)
-            {
-                calc.InputValue(s.ToString());
-            }
-            calc.InputValue(SpecialSignals.Calculate.ToString());
-
-            // Assert
-            Assert.AreEqual(expected, calc.PrintedValues);
-        }
-
-        [TestMethod()]
-        public void AddingTwoCommaSeparatedTwoNumbers()
-        {
-            // Arrange
-            Calculator calc = new Calculator();
-            string equation = "1,5+2,5";
-            string expected = "4";
-
-            // Act
-            foreach (char s in equation)
-            {
-                calc.InputValue(s.ToString());
-            }
-            calc.InputValue(SpecialSignals.Calculate.ToString());
-
-            // Assert
-            Assert.AreEqual(expected, calc.PrintedValues);
-        }
-
-        [TestMethod()]
-        public void AddingSixCommaSeparatedTwoNumbers()
-        {
-            // Arrange
-            Calculator calc = new Calculator();
-            string equation = "1,5+2,5+3,1+0,7+2,3+3,5";
-            string expected = "13,6";
-
-            // Act
-            foreach (char s in equation)
-            {
-                calc.InputValue(s.ToString());
-            }
-            calc.InputValue(SpecialSignals.Calculate.ToString());
-
-            // Assert
-            Assert.AreEqual(expected, calc.PrintedValues);
-        }
-
-        [TestMethod()]
-        public void TryToAddEmptyValues()
-        {
-            // Arrange
-            Calculator calc = new Calculator();
-            string equation = "1+++";
+            string equation = "12/2/2/3";
             string expected = "1";
 
             // Act
@@ -139,13 +44,108 @@ namespace CalculatorTests.Basic_operations
             Assert.AreEqual(expected, calc.PrintedValues);
         }
 
-        [TestMethod()]
-        public void TryToAddCommas()
+        [TestMethod]
+        public void DivideFourNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+,+,+1";
-            string expected = "2";
+            string equation = "24/2/2/2/2";
+            string expected = "1,5";
+
+            // Act
+            foreach (char s in equation)
+            {
+                calc.InputValue(s.ToString());
+            }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
+
+            // Assert
+            Assert.AreEqual(expected, calc.PrintedValues);
+        }
+
+        [TestMethod]
+        public void DivideTenNumbersTest()
+        {
+            // Arrange
+            Calculator calc = new Calculator();
+            string equation = "4096/2/2/2/2/2/2/2/1/2/2";
+            string expected = "8";
+
+            // Act
+            foreach (char s in equation)
+            {
+                calc.InputValue(s.ToString());
+            }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
+
+            // Assert
+            Assert.AreEqual(expected, calc.PrintedValues);
+        }
+
+        [TestMethod]
+        public void DivideTwoCommaSeparatedNumbersTest()
+        {
+            // Arrange
+            Calculator calc = new Calculator();
+            string equation = "6,3/2,4";
+            string expected = "2,625";
+
+            // Act
+            foreach (char s in equation)
+            {
+                calc.InputValue(s.ToString());
+            }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
+
+            // Assert
+            Assert.AreEqual(expected, calc.PrintedValues);
+        }
+
+        [TestMethod]
+        public void DivideSixCommaSeparatedNumbersTest()
+        {
+            // Arrange
+            Calculator calc = new Calculator();
+            string equation = "12515,53/1,5/6,4/75,2/0,5/12,73/24,26";
+            string expected = "0,112271872870838";
+
+            // Act
+            foreach (char s in equation)
+            {
+                calc.InputValue(s.ToString());
+            }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
+
+            // Assert
+            Assert.AreEqual(expected, calc.PrintedValues);
+        }
+
+        [TestMethod]
+        public void TryToDivideEmptyNumbersTest()
+        {
+            // Arrange
+            Calculator calc = new Calculator();
+            string equation = "7////";
+            string expected = "7";
+
+            // Act
+            foreach (char s in equation)
+            {
+                calc.InputValue(s.ToString());
+            }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
+
+            // Assert
+            Assert.AreEqual(expected, calc.PrintedValues);
+        }
+
+        [TestMethod]
+        public void TryToDivideCommasTest()
+        {
+            // Arrange
+            Calculator calc = new Calculator();
+            string equation = "7/,/,/,/7";
+            string expected = "1";
 
             // Act
             foreach (char s in equation)

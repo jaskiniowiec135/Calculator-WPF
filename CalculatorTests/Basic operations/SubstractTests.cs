@@ -4,15 +4,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CalculatorTests.Basic_operations
 {
     [TestClass]
-    public class AddTests
+    public class SubstractTests
     {
         [TestMethod()]
-        public void SimplestAddTest()
+        public void SimplestSubstractTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "2+2";
-            string expected = "4";
+            string equation = "4-2";
+            string expected = "2";
 
             // Act
             foreach (char s in equation)
@@ -26,12 +26,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void AddingThreeNumbers()
+        public void SubstractThreeNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "2+2+2";
-            string expected = "6";
+            string equation = "8-2-2-2";
+            string expected = "2";
 
             // Act
             foreach (char s in equation)
@@ -45,12 +45,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void AddingFourNumbers()
+        public void SubstractFourNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "2+2+2+2";
-            string expected = "8";
+            string equation = "10-4-2-2-2";
+            string expected = "0";
 
             // Act
             foreach (char s in equation)
@@ -64,12 +64,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void AddingTenNumbers()
+        public void SubstractTenNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+1+1+1+1+1+1+1+1+1";
-            string expected = "10";
+            string equation = "100-4-21-22-11-3-8-1-1-1-10";
+            string expected = "18";
 
             // Act
             foreach (char s in equation)
@@ -83,12 +83,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void AddingTwoCommaSeparatedTwoNumbers()
+        public void SubstractTwoCommaSeparatedNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1,5+2,5";
-            string expected = "4";
+            string equation = "10,3-2,5-3,2";
+            string expected = "4,6";
 
             // Act
             foreach (char s in equation)
@@ -102,12 +102,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void AddingSixCommaSeparatedTwoNumbers()
+        public void SubstractSixCommaSeparatedNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1,5+2,5+3,1+0,7+2,3+3,5";
-            string expected = "13,6";
+            string equation = "100,35-2,5-3,2-19,3-12,6-2,3-10,03";
+            string expected = "50,42";
 
             // Act
             foreach (char s in equation)
@@ -121,11 +121,11 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void TryToAddEmptyValues()
+        public void TryToSubstractEmptyNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+++";
+            string equation = "1---";
             string expected = "1";
 
             // Act
@@ -140,12 +140,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void TryToAddCommas()
+        public void TryToSubstractCommasTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+,+,+1";
-            string expected = "2";
+            string equation = "1-,-,-,-1";
+            string expected = "0";
 
             // Act
             foreach (char s in equation)

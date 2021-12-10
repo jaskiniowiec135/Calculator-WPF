@@ -1,55 +1,18 @@
 ﻿using Calculator_WPF;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
-namespace CalculatorTests.Basic_operations
+namespace CalculatorTests.Advanced_operations
 {
     [TestClass]
-    public class AddTests
+    public class BracketTests
     {
-        [TestMethod()]
-        public void SimplestAddTest()
+        [TestMethod]
+        public void SimplestBracketTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "2+2";
-            string expected = "4";
-
-            // Act
-            foreach (char s in equation)
-            {
-                calc.InputValue(s.ToString());
-            }
-            calc.InputValue(SpecialSignals.Calculate.ToString());
-
-            // Assert
-            Assert.AreEqual(expected, calc.PrintedValues);
-        }
-
-        [TestMethod()]
-        public void AddingThreeNumbers()
-        {
-            // Arrange
-            Calculator calc = new Calculator();
-            string equation = "2+2+2";
-            string expected = "6";
-
-            // Act
-            foreach (char s in equation)
-            {
-                calc.InputValue(s.ToString());
-            }
-            calc.InputValue(SpecialSignals.Calculate.ToString());
-
-            // Assert
-            Assert.AreEqual(expected, calc.PrintedValues);
-        }
-
-        [TestMethod()]
-        public void AddingFourNumbers()
-        {
-            // Arrange
-            Calculator calc = new Calculator();
-            string equation = "2+2+2+2";
+            string equation = "4+(2+2)";
             string expected = "8";
 
             // Act
@@ -63,12 +26,31 @@ namespace CalculatorTests.Basic_operations
             Assert.AreEqual(expected, calc.PrintedValues);
         }
 
-        [TestMethod()]
-        public void AddingTenNumbers()
+        [TestMethod]
+        public void TwoNestedBracketsTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+1+1+1+1+1+1+1+1+1";
+            string equation = "4+(2+2+(18-7))";
+            string expected = "19";
+
+            // Act
+            foreach (char s in equation)
+            {
+                calc.InputValue(s.ToString());
+            }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
+
+            // Assert
+            Assert.AreEqual(expected, calc.PrintedValues);
+        }
+
+        [TestMethod]
+        public void ThreeNestedBracketsTest()
+        {
+            // Arrange
+            Calculator calc = new Calculator();
+            string equation = "4+(2+2+(18-7-(7+2)))";
             string expected = "10";
 
             // Act
@@ -82,13 +64,13 @@ namespace CalculatorTests.Basic_operations
             Assert.AreEqual(expected, calc.PrintedValues);
         }
 
-        [TestMethod()]
-        public void AddingTwoCommaSeparatedTwoNumbers()
+        [TestMethod]
+        public void MultiplyTwoBracketsTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1,5+2,5";
-            string expected = "4";
+            string equation = "(2+7)*(7+3)";
+            string expected = "90";
 
             // Act
             foreach (char s in equation)
@@ -101,13 +83,13 @@ namespace CalculatorTests.Basic_operations
             Assert.AreEqual(expected, calc.PrintedValues);
         }
 
-        [TestMethod()]
-        public void AddingSixCommaSeparatedTwoNumbers()
+        [TestMethod]
+        public void MultiplyThreeBracketsTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1,5+2,5+3,1+0,7+2,3+3,5";
-            string expected = "13,6";
+            string equation = "(2+7)*(7+3)*(6-2)";
+            string expected = "360";
 
             // Act
             foreach (char s in equation)
@@ -120,13 +102,13 @@ namespace CalculatorTests.Basic_operations
             Assert.AreEqual(expected, calc.PrintedValues);
         }
 
-        [TestMethod()]
-        public void TryToAddEmptyValues()
+        [TestMethod]
+        public void MultiplyTwoNestedBracketsTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+++";
-            string expected = "1";
+            string equation = "(2*(7-3))*(4+(8*7))";
+            string expected = "480";
 
             // Act
             foreach (char s in equation)
@@ -139,13 +121,13 @@ namespace CalculatorTests.Basic_operations
             Assert.AreEqual(expected, calc.PrintedValues);
         }
 
-        [TestMethod()]
-        public void TryToAddCommas()
+        [TestMethod]
+        public void MultiplyTwoNestedNotClosedBracketsTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+,+,+1";
-            string expected = "2";
+            string equation = "(2*(7-3";
+            string expected = "8";
 
             // Act
             foreach (char s in equation)

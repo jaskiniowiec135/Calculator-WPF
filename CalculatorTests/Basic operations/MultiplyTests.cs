@@ -4,14 +4,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CalculatorTests.Basic_operations
 {
     [TestClass]
-    public class AddTests
+    public class MultiplyTests
     {
         [TestMethod()]
-        public void SimplestAddTest()
+        public void SimplestMultiplyTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "2+2";
+            string equation = "2*2";
             string expected = "4";
 
             // Act
@@ -26,30 +26,11 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void AddingThreeNumbers()
+        public void MultiplyThreeNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "2+2+2";
-            string expected = "6";
-
-            // Act
-            foreach (char s in equation)
-            {
-                calc.InputValue(s.ToString());
-            }
-            calc.InputValue(SpecialSignals.Calculate.ToString());
-
-            // Assert
-            Assert.AreEqual(expected, calc.PrintedValues);
-        }
-
-        [TestMethod()]
-        public void AddingFourNumbers()
-        {
-            // Arrange
-            Calculator calc = new Calculator();
-            string equation = "2+2+2+2";
+            string equation = "2*2*2";
             string expected = "8";
 
             // Act
@@ -64,12 +45,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void AddingTenNumbers()
+        public void MultiplyFourNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+1+1+1+1+1+1+1+1+1";
-            string expected = "10";
+            string equation = "2*3*5*7";
+            string expected = "210";
 
             // Act
             foreach (char s in equation)
@@ -83,12 +64,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void AddingTwoCommaSeparatedTwoNumbers()
+        public void MultiplyTenNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1,5+2,5";
-            string expected = "4";
+            string equation = "2*2*2*2*5*10*7*9*12*30";
+            string expected = "18144000";
 
             // Act
             foreach (char s in equation)
@@ -102,12 +83,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void AddingSixCommaSeparatedTwoNumbers()
+        public void MultiplyTwoCommaSeparatedNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1,5+2,5+3,1+0,7+2,3+3,5";
-            string expected = "13,6";
+            string equation = "2,5*3,2";
+            string expected = "8";
 
             // Act
             foreach (char s in equation)
@@ -121,12 +102,12 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void TryToAddEmptyValues()
+        public void MultiplySixCommaSeparatedNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+++";
-            string expected = "1";
+            string equation = "5,5*10,32*7,1*9,7*12,51*30,1";
+            string expected = "1471960,9039212";
 
             // Act
             foreach (char s in equation)
@@ -140,12 +121,31 @@ namespace CalculatorTests.Basic_operations
         }
 
         [TestMethod()]
-        public void TryToAddCommas()
+        public void TryToMultiplyEmptyNumbersTest()
         {
             // Arrange
             Calculator calc = new Calculator();
-            string equation = "1+,+,+1";
-            string expected = "2";
+            string equation = "5*****";
+            string expected = "5";
+
+            // Act
+            foreach (char s in equation)
+            {
+                calc.InputValue(s.ToString());
+            }
+            calc.InputValue(SpecialSignals.Calculate.ToString());
+
+            // Assert
+            Assert.AreEqual(expected, calc.PrintedValues);
+        }
+
+        [TestMethod()]
+        public void TryToMultiplyCommasTest()
+        {
+            // Arrange
+            Calculator calc = new Calculator();
+            string equation = "5*,*,*,*,*5";
+            string expected = "25";
 
             // Act
             foreach (char s in equation)

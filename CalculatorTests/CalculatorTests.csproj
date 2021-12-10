@@ -56,7 +56,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Advanced operations\BracketTests.cs" />
     <Compile Include="Basic operations\AddTests.cs" />
+    <Compile Include="Basic operations\MultiplyTests.cs" />
+    <Compile Include="Basic operations\SubstractTests.cs" />
+    <Compile Include="Basic operations\DivisionTests.cs" />
     <Compile Include="CalculatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -42,7 +42,7 @@ namespace Calculator_WPF.Tests
             calc.InputValue(SpecialSignals.Calculate.ToString());
 
             // Assert
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Basic counting")]
@@ -65,7 +65,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
 
         }
 
@@ -89,7 +89,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Basic counting")]
@@ -112,7 +112,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Basic counting")]
@@ -135,7 +135,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Basic counting")]
@@ -158,7 +158,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Advanced counting")]
@@ -181,7 +181,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Advanced counting")]
@@ -204,7 +204,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Advanced counting")]
@@ -227,7 +227,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Advanced counting")]
@@ -250,7 +250,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Advanced counting")]
@@ -273,7 +273,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Advanced counting")]
@@ -296,7 +296,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         [TestCategory("Advanced counting")]
@@ -319,7 +319,7 @@ namespace Calculator_WPF.Tests
 
             // Assert
 
-            Assert.AreEqual(calc.PrintedValues, expected);
+            Assert.AreEqual(expected, calc.PrintedValues);
         }
 
         #endregion
